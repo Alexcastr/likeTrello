@@ -4,6 +4,7 @@ import { EntriesState } from '.';
 type EntriesActionType = 
 | {type: '[Entry] Add-Entry', payload:Entry  }
 | {type: '[Entry] Entry-updated', payload:Entry  }
+| {type: '[Entry] Resfresh-data', payload:Entry[] }
 
 //entries reducer lo ponemos en miniscupa por que es una función, no es componente
 export const entriesReducer = (state:EntriesState, action: EntriesActionType): EntriesState=>{
@@ -30,6 +31,12 @@ export const entriesReducer = (state:EntriesState, action: EntriesActionType): E
           }
           return entry
         })
+      }
+
+    case '[Entry] Resfresh-data':
+      return{
+        ...state,
+        entries: [...action.payload]
       }
 
   default:

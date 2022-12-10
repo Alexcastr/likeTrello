@@ -23,24 +23,24 @@ export const EntryCard:FC<Props> = ({entry}) => {
   }
 
   return (
-   <Card 
-   
-   sx={{ marginBottom: 1 }}
-   // Eventos de drag and drop
-   draggable
-   onDragStart={onDragStart}
+   <Card
+    sx={{ marginBottom: 1 }}
+    // Eventos de drag and drop
+    draggable
+    onDragStart={onDragStart}
     onDragEnd={onDragEnd}
    >
     <CardActionArea>
      <CardContent>
-      <Typography sx={{ whiteSpace: "pre-line" }}>
-       {entry.description}
-      </Typography>
-
-      <CardActions sx={{display: 'flex', justifyContent: 'end', paddingRight: 2}}>
-       <Typography variant="body2">Hace 30 minutos</Typography>
-      </CardActions>
+      <Typography sx={{ whiteSpace: "pre-line" }}></Typography>
+      {entry.description}
      </CardContent>
+
+     <CardActions
+      sx={{ display: "flex", justifyContent: "end", paddingRight: 2 }}
+     >
+      <Typography variant="body2">Hace 30 minutos</Typography>
+     </CardActions>
     </CardActionArea>
    </Card>
   );
