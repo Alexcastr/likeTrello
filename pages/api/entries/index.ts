@@ -17,11 +17,12 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
   switch(req.method){
     case 'GET':
       return getEntries(res)
-    default:
-      return res.status(400).json({message: 'Endpoint no existe'})
+    
     case 'POST':
       // la req viene con el body que tiene la data
       return createEntry(req, res)
+    default:
+      return res.status(400).json({message: 'Endpoint no existe'})
   }
   
 
@@ -56,5 +57,5 @@ const createEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     res.status(500).json({ message: 'Algo salio mal, revisar consola del servidor' })
   }
 
-
 }
+

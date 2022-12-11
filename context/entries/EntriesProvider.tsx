@@ -1,5 +1,4 @@
 import { FC, useReducer, useEffect } from 'react';
-import {v4 as uuidv4} from 'uuid';
 import { Entry } from '../../interfaces';
 import { EntriesContext, entriesReducer } from './';
 import {entriesApi} from '../../apis';
@@ -22,20 +21,21 @@ export const EntriesProvider:FC<Props> = ({children}) => {
 
 const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
 
-const addNewEntry=(description: string) =>{
+const addNewEntry= async (description: string) =>{
+  const {data} = await entriesApi.post<Entry>('/entries', {description})
 
-  const newEntry : Entry ={
-    _id:uuidv4(),
-    description: description,
-    createdAt: Date.now(),
-    status: 'pending',
-
-  }
-  dispatch({type: '[Entry] Add-Entry', payload: newEntry})
+  dispatch({type: '[Entry] Add-Entry', payload: data})
 } 
 // puede esperar solo el id pero por si acaso le pasamos el entry completo, para actualizarlo
-const updateEntry=(entry: Entry) =>{
-  dispatch({type: '[Entry] Entry-updated', payload: entry})
+const updateEntry= async ({ _id,description, status}:Entry) =>{
+  try {
+    // const {data} = await entriesApi.put<Entry>(`/entries/${entry._id}`, entry)  se puede hacer así pero no es recomendable, porque es menos optimo, porque estamos enviando todo el objeto, cuando solo necesitamos el id, el status y la descripción
+    const {data} = await entriesApi.put<Entry>(`/entries/${_id}`, {status: status, description: description})
+    dispatch({type: '[Entry] Entry-updated', payload: data})
+  } catch (error) {
+    console.log(error)
+  }
+  
 }
 
 const refreshEntries = async () => {
