@@ -15,7 +15,7 @@ export interface UIState{
 
 
 const UI_INITIAL_STATE: UIState = {
-  // estado del menu
+  // Estado del menu con los tipos de datos booleanos
   sidemenuOpen: false,
   isAddingEntry: false,
   isDragging: false,
