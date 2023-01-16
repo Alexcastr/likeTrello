@@ -5,6 +5,10 @@
 
 <image src="/public/liketrelloimage.png" alt="Trello ui image">
 
+
+<a href="https://like-trello-navy.vercel.app" rel="nofollow">WEB</a>
+
+
 correr localmente, se necesita la base de datos
 
 ```
