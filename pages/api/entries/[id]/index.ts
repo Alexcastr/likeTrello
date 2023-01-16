@@ -24,6 +24,8 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
       return updateEntry(req, res);
     case 'GET':
       return getEntry(req, res);
+    case 'DELETE':
+      return deleteEntry(req, res);
     default:
       return res.status(400).json({message: 'Endpoint no existe'})
   }
@@ -43,6 +45,28 @@ const getEntry = async (req:NextApiRequest, res:NextApiResponse)=>{
   await db.disconnect()
   return res.status(200).json(entryInDb)
   
+}
+
+const deleteEntry = async (req:NextApiRequest, res: NextApiResponse<Data>)=>{
+  const { id } = req.query
+
+  await db.connect()
+  const entryInDb = await Entry.findById(id)
+  await db.disconnect()
+  if(!entryInDb){
+    return res.status(400).json({message: 'No hay entrada con ese id' + id})
+  }
+
+  try {
+    const deletedEntry = await Entry.findByIdAndDelete(id)
+    await db.disconnect()
+    res.status(200).json(deletedEntry!)
+  } catch (error: any) {
+    console.log(error)
+    await db.disconnect();
+    res.status(400).json({ message: error.errors.status.message });
+  }
+
 }
 
 

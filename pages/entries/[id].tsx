@@ -1,7 +1,7 @@
 
 import { useState, ChangeEvent, useMemo, FC, useContext } from 'react';
 import { GetServerSideProps } from 'next'
-
+import { useRouter } from 'next/router';
 
 import { Layout } from '../../components/layouts'
 import { capitalize, Grid, Card, CardHeader, CardContent, TextField, CardActions, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, IconButton } from '@mui/material';
@@ -14,8 +14,6 @@ import { dbEntries } from '../../database';
 import { EntriesContext } from '../../context/entries';
 
 import { dateFunctions } from '../../utils';
-
-
 
 
 interface Props {
@@ -35,7 +33,8 @@ const EntryPage:FC<Props> = ( {entry} ) => {
   const [status, setStatus] = useState<EntryStatus>(entry.status)
   const [touch, setTouch] = useState(false)
 
-  const {updateEntry} = useContext(EntriesContext)
+  const {updateEntry, deleteEntry} = useContext(EntriesContext)
+  const router = useRouter()
 
   //vamos a usar un useMemo ya que estamos usando demasiado el {inputValue.length <= 0 && touch } para validar el formulario y no queremos que se vuelva a ejecutar cada vez que cambie el estado
   const isNotValid = useMemo(() => inputValue.length <= 0 && touch, [inputValue, touch])
@@ -57,16 +56,25 @@ const EntryPage:FC<Props> = ( {entry} ) => {
       status,
       description: inputValue
     }
+    router.push('http://localhost:3000/')
     updateEntry(updatedEntry, true)
+    
+  }
+
+  const onDelete = () => {
+    deleteEntry(entry._id)
+    router.push('http://localhost:3000/')
   }
  return (
-  <Layout title={inputValue.substring(0,20) + '...'}>
+  <Layout title={inputValue.substring(0, 20) + "..."}>
    <Grid container justifyContent="center" sx={{ marginTop: 2 }}>
     <Grid item xs={12} md={8} lg={6}>
      <Card>
       <CardHeader
        title={`Entrada: `}
-       subheader={`Creada ${dateFunctions.getFormatDistanceToNow(entry.createdAt)}`}
+       subheader={`Creada ${dateFunctions.getFormatDistanceToNow(
+        entry.createdAt
+       )}`}
       />
       <CardContent>
        {/* //multiline es para poder editar en varias lineas */}
@@ -116,6 +124,7 @@ const EntryPage:FC<Props> = ( {entry} ) => {
    </Grid>
 
    <IconButton
+    onClick={onDelete}
     sx={{
      position: "fixed",
      bottom: 30,
