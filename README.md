@@ -7,7 +7,7 @@ Proyecto drag and drop parecido a Trello
 ![Trello ui image]
 (https://raw.githubusercontent.com/Alexcastr/likeTrello/main/public/liketrelloimage.png)
 
-
+<image src="/public/liketrelloimage.png" alt="Trello ui image">
 
 correr localmente, se necesita la base de datos
 
