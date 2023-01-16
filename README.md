@@ -1,11 +1,7 @@
 #Next js liketrello
 
 
-
-
-Proyecto drag and drop parecido a Trello
-![Trello ui image]
-(https://raw.githubusercontent.com/Alexcastr/likeTrello/main/public/liketrelloimage.png)
+#Proyecto drag and drop parecido a Trello
 
 <image src="/public/liketrelloimage.png" alt="Trello ui image">
 
